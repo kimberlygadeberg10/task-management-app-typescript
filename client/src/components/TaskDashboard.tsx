@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Task = {
   id: number;
@@ -6,52 +7,49 @@ type Task = {
   completed: boolean;
 };
 
-const TaskDashboard: React.FC = () => {
+const TaskDashboard = () => {
   const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, title: "Learn TypeScript", completed: false },
-    { id: 2, title: "Build Task App", completed: false },
+    { id: 1, title: "Sample Task", completed: false },
   ]);
 
-  const [newTask, setNewTask] = useState<string>("");
+  const [newTask, setNewTask] = useState("");
 
-  // Add task
+  const navigate = useNavigate();
+
   const addTask = () => {
     if (!newTask.trim()) return;
 
-    const newTaskObject: Task = {
+    const newTaskItem: Task = {
       id: Date.now(),
       title: newTask,
       completed: false,
     };
 
-    setTasks([...tasks, newTaskObject]);
+    setTasks([...tasks, newTaskItem]);
     setNewTask("");
   };
 
-  // Toggle task completion
   const toggleTask = (id: number) => {
-    const updatedTasks = tasks.map((task) =>
+    const updated = tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task,
     );
 
-    setTasks(updatedTasks);
+    setTasks(updated);
   };
 
-  // Delete task
   const deleteTask = (id: number) => {
-    const filteredTasks = tasks.filter((task) => task.id !== id);
-    setTasks(filteredTasks);
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
   return (
     <div>
-      <h2>Task Dashboard</h2>
+      <h2>Dashboard</h2>
 
       <input
         type="text"
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
-        placeholder="Enter a new task"
+        placeholder="Enter task"
       />
 
       <button onClick={addTask}>Add Task</button>
@@ -60,7 +58,7 @@ const TaskDashboard: React.FC = () => {
         {tasks.map((task) => (
           <li key={task.id}>
             <span
-              onClick={() => toggleTask(task.id)}
+              onClick={() => navigate(`/task/${task.id}`)}
               style={{
                 cursor: "pointer",
                 textDecoration: task.completed ? "line-through" : "none",
@@ -68,6 +66,8 @@ const TaskDashboard: React.FC = () => {
             >
               {task.title}
             </span>
+
+            <button onClick={() => toggleTask(task.id)}>Toggle</button>
 
             <button onClick={() => deleteTask(task.id)}>Delete</button>
           </li>

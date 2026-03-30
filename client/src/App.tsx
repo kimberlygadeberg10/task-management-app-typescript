@@ -9,10 +9,7 @@ function App() {
       <h1>Task Management App</h1>
 
       <Routes>
-        {/* Dashboard (home page) */}
         <Route path="/" element={<TaskDashboard />} />
-
-        {/* Task details page */}
         <Route path="/task/:id" element={<TaskDetails />} />
       </Routes>
     </div>
