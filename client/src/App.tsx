@@ -1,5 +1,13 @@
+import React from "react";
+import TaskDashboard from "./components/TaskDashboard";
+
 function App() {
-  return <h1>HELLO THIS IS MY APP</h1>;
+  return (
+    <div>
+      <h1>Task Management App</h1>
+      <TaskDashboard />
+    </div>
+  );
 }
 
 export default App;
