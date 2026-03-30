@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-// Define TypeScript type
 type Task = {
   id: number;
   title: string;
@@ -8,16 +7,14 @@ type Task = {
 };
 
 const TaskDashboard: React.FC = () => {
-  // State for tasks
   const [tasks, setTasks] = useState<Task[]>([
     { id: 1, title: "Learn TypeScript", completed: false },
     { id: 2, title: "Build Task App", completed: false },
   ]);
 
-  // State for new task input
   const [newTask, setNewTask] = useState<string>("");
 
-  // Add new task
+  // Add task
   const addTask = () => {
     if (!newTask.trim()) return;
 
@@ -31,11 +28,25 @@ const TaskDashboard: React.FC = () => {
     setNewTask("");
   };
 
+  // Toggle task completion
+  const toggleTask = (id: number) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task,
+    );
+
+    setTasks(updatedTasks);
+  };
+
+  // Delete task
+  const deleteTask = (id: number) => {
+    const filteredTasks = tasks.filter((task) => task.id !== id);
+    setTasks(filteredTasks);
+  };
+
   return (
     <div>
       <h2>Task Dashboard</h2>
 
-      {/* Input field */}
       <input
         type="text"
         value={newTask}
@@ -45,11 +56,20 @@ const TaskDashboard: React.FC = () => {
 
       <button onClick={addTask}>Add Task</button>
 
-      {/* Task list */}
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>
-            {task.title} - {task.completed ? "✅ Done" : "❌ Not Done"}
+            <span
+              onClick={() => toggleTask(task.id)}
+              style={{
+                cursor: "pointer",
+                textDecoration: task.completed ? "line-through" : "none",
+              }}
+            >
+              {task.title}
+            </span>
+
+            <button onClick={() => deleteTask(task.id)}>Delete</button>
           </li>
         ))}
       </ul>
