@@ -1,40 +1,35 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { Task } from "../types/Task";
 
-type Task = {
-  id: number;
-  title: string;
-  completed: boolean;
+type Props = {
+  tasks: Task[];
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 };
 
-const TaskDashboard = () => {
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, title: "Sample Task", completed: false },
-  ]);
-
+const TaskDashboard = ({ tasks, setTasks }: Props) => {
   const [newTask, setNewTask] = useState("");
-
   const navigate = useNavigate();
 
   const addTask = () => {
     if (!newTask.trim()) return;
 
-    const newTaskItem: Task = {
+    const task: Task = {
       id: Date.now(),
       title: newTask,
       completed: false,
     };
 
-    setTasks([...tasks, newTaskItem]);
+    setTasks([...tasks, task]);
     setNewTask("");
   };
 
   const toggleTask = (id: number) => {
-    const updated = tasks.map((task) =>
-      task.id === id ? { ...task, completed: !task.completed } : task,
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task,
+      ),
     );
-
-    setTasks(updated);
   };
 
   const deleteTask = (id: number) => {
@@ -46,7 +41,6 @@ const TaskDashboard = () => {
       <h2>Dashboard</h2>
 
       <input
-        type="text"
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
         placeholder="Enter task"
@@ -68,7 +62,6 @@ const TaskDashboard = () => {
             </span>
 
             <button onClick={() => toggleTask(task.id)}>Toggle</button>
-
             <button onClick={() => deleteTask(task.id)}>Delete</button>
           </li>
         ))}

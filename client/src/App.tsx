@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import TaskDashboard from "./components/TaskDashboard";
 import TaskDetails from "./pages/TaskDetails";
+import type { Task } from "./types/Task";
 
 function App() {
-  return (
-    <div>
-      <h1>Task Management App</h1>
+  const [tasks, setTasks] = useState<Task[]>([
+    { id: 1, title: "Sample Task", completed: false },
+  ]);
 
-      <Routes>
-        <Route path="/" element={<TaskDashboard />} />
-        <Route path="/task/:id" element={<TaskDetails />} />
-      </Routes>
-    </div>
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={<TaskDashboard tasks={tasks} setTasks={setTasks} />}
+      />
+      <Route path="/task/:id" element={<TaskDetails tasks={tasks} />} />
+    </Routes>
   );
 }
 
