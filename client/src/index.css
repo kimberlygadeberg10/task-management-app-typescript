@@ -1,5 +1,53 @@
-body {
+:root {
   font-family: Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #222;
+  background: #f4f4f4;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --font-display: Arial, sans-serif;
+  --font-sans: Arial, sans-serif;
+  --surface: #ffffff;
+  --surface-muted: #eeeeee;
+  --border: #cccccc;
+  --border-strong: #b5b5b5;
+  --text: #222222;
+  --text-soft: #666666;
+  --accent: #1d5fd0;
+  --accent-2: #1d5fd0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
   margin: 0;
-  padding: 20px;
+  background: #f4f4f4;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+}
+
+#root {
+  min-height: 100vh;
 }
